@@ -1,2 +1,3 @@
 - **account_pool_path：** 账号目录（方式：email:password）
 - **tokens_path：** token存放目录
+- **options.set_proxy：** 代理url和端口

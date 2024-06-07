@@ -23,11 +23,11 @@ def el(el: ChromiumPage, find_str: str, is_list: bool = False) -> ChromiumElemen
 
 
 class ChatGPT_Auth:
-    
+   
     url: str = 'https://chatgpt.com'
     account_pool_path: str = 'zhang.txt' #账号
     accurl : str = 'https://chat.openai.com/api/auth/session'
-    tokens_path: str = 'token3.txt'
+    tokens_path: str = 'tk.txt'
     
     page: ChromiumPage = None
     
@@ -35,6 +35,7 @@ class ChatGPT_Auth:
         options = options_default()
         options.incognito(True)
         options.headless(False)
+        #options.set_proxy("14.186.99.3:8080")
         options.set_proxy("127.0.0.1:33210")
         self.page = ChromiumPage(options)
         pass
@@ -124,7 +125,9 @@ class ChatGPT_Auth:
             print(erpass)
             if erpass != None:
                 return True
-        
+            code = el(self.page,'#code')
+            if code != None:
+                return True
         user_alt_el = el(self.page, '@alt=User')
         if user_alt_el != None:
             # token = self.page.cookies(as_dict=True)['__Secure-next-auth.session-token']

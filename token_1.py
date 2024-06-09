@@ -78,7 +78,7 @@ class ChatGPT_Auth:
         
         
     def login(self, email, password):
-        
+        #过cf盾
         cb_lb = el(self.page, '.cb-lb')
         if cb_lb != None:
             trs = cb_lb.child()

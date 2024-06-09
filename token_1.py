@@ -35,7 +35,6 @@ class ChatGPT_Auth:
         options = options_default()
         options.incognito(True)
         options.headless(False)
-        #options.set_proxy("14.186.99.3:8080")
         options.set_proxy("127.0.0.1:33210")
         self.page = ChromiumPage(options)
         pass
@@ -79,6 +78,15 @@ class ChatGPT_Auth:
         
         
     def login(self, email, password):
+        
+        cb_lb = el(self.page, '.cb-lb')
+        if cb_lb != None:
+            trs = cb_lb.child()
+            if trs != None:
+                time.sleep(1)
+                trs.click()
+                
+            print('cf盾中...')
         # 点击跳转登录页
         login_btn_el = el(self.page, ".btn relative btn-secondary")
         print(login_btn_el)

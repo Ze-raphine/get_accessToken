@@ -25,7 +25,7 @@ def el(el: ChromiumPage, find_str: str, is_list: bool = False) -> ChromiumElemen
 class ChatGPT_Auth:
    
     url: str = 'https://chatgpt.com'
-    account_pool_path: str = 'zhang.txt' #账号
+    account_pool_path: str = 'zhang.txt' #账号 （方式：email:password）
     accurl : str = 'https://chat.openai.com/api/auth/session'
     tokens_path: str = 'tk.txt'
     

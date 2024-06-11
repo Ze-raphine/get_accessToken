@@ -78,13 +78,13 @@ class ChatGPT_Auth:
         
         
     def login(self, email, password):
-        #过cf盾
-        cb_lb = el(self.page, '.cb-lb')
-        if cb_lb != None:
-            trs = cb_lb.child()
-            if trs != None:
-                time.sleep(1)
-                trs.click()
+        #过盾
+        iframe= el(self.page, 'xpath://div/iframe')
+        if iframe !=None:
+            print(iframe)
+            cb_lb = iframe.ele("确认您是真人", timeout=2.5)
+            if cb_lb != None:
+                cb_lb.click()
                 
             print('cf盾中...')
         # 点击跳转登录页

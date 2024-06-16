@@ -34,6 +34,7 @@ class ChatGPT_Auth:
     def init(self):
         options = options_default()
         options.incognito(True)
+        
         options.headless(False)
         options.set_proxy("127.0.0.1:33210")
         self.page = ChromiumPage(options)
@@ -78,15 +79,21 @@ class ChatGPT_Auth:
         
         
     def login(self, email, password):
-        #过盾
-        iframe= el(self.page, 'xpath://div/iframe')
-        if iframe !=None:
-            print(iframe)
-            cb_lb = iframe.ele("确认您是真人", timeout=2.5)
-            if cb_lb != None:
-                cb_lb.click()
+        try:
+            iframe= el(self.page, 'xpath://div/iframe') #cf盾
+            if iframe !=None:
+                print(f"iframe:{iframe}")
+                if iframe.ele(".cf-chl-widget-z4zii", timeout=2.5):
+                    time.sleep(2)
+                    print('cf盾中...')
+                elif iframe.ele("确认您是真人", timeout=2.5):
+                    cb_lb = iframe.ele("确认您是真人", timeout=2.5)
+                    if cb_lb != None:
+                        cb_lb.click()
+        except Exception as e:           
+            print(e)
+            time.sleep(2)
                 
-            print('cf盾中...')
         # 点击跳转登录页
         login_btn_el = el(self.page, ".btn relative btn-secondary")
         print(login_btn_el)
@@ -132,6 +139,7 @@ class ChatGPT_Auth:
             erpass = el(self.page,'.mb-5 text-center')
             print(erpass)
             if erpass != None:
+                print("You do not have an account because it has been deleted or deactivated.")
                 return True
             code = el(self.page,'#code')
             if code != None:
